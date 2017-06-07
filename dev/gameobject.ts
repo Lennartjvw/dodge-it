@@ -19,4 +19,8 @@ class GameObject {
         return this.y;
     }
 
+    public setY(y: number): void {
+        this.y = y;
+    }
+
 }

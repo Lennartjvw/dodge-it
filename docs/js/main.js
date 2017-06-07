@@ -12,6 +12,9 @@ var GameObject = (function () {
     GameObject.prototype.getY = function () {
         return this.y;
     };
+    GameObject.prototype.setY = function (y) {
+        this.y = y;
+    };
     return GameObject;
 }());
 var Game = (function () {
@@ -42,10 +45,53 @@ var Player = (function (_super) {
         this.y = 600;
         this.width = 100;
         this.height = 200;
+        this.spacebar = 32;
+        this.behaviour = new Jumping(this);
+        window.addEventListener("keydown", this.onKeyDown.bind(this));
     }
+    Player.prototype.onKeyDown = function (event) {
+        if (event.keyCode == 32) {
+            this.behaviour.jumping();
+        }
+    };
     Player.prototype.draw = function () {
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
     };
     return Player;
 }(GameObject));
+var Jumping = (function () {
+    function Jumping(p) {
+        this.goingDown = false;
+        this.jumpLimit = 300;
+        console.log("Behaviour Jump!");
+        this.player = p;
+        this.jump_y = this.player.getY();
+        this.isJumping = false;
+    }
+    Jumping.prototype.jumping = function () {
+        var _this = this;
+        console.log("jump");
+        var y = this.player.getY();
+        if (!this.isJumping) {
+            this.isJumping = true;
+            this.timer = setInterval(function () {
+                if (y > _this.jumpLimit && !_this.goingDown) {
+                    y -= 10;
+                    _this.player.setY(y);
+                }
+                else {
+                    _this.goingDown = true;
+                    y += 10;
+                    _this.player.setY(y);
+                    if (y == _this.jump_y) {
+                        clearInterval(_this.timer);
+                        _this.goingDown = false;
+                        _this.isJumping = false;
+                    }
+                }
+            }, 10);
+        }
+    };
+    return Jumping;
+}());
 //# sourceMappingURL=main.js.map

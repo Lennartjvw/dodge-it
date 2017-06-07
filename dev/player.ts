@@ -1,5 +1,9 @@
 class Player extends GameObject {
 
+    private spacebar: number;
+
+    public behaviour: Behaviour;
+
     constructor(){
         super();
 
@@ -13,6 +17,19 @@ class Player extends GameObject {
         this.width = 100;
         this.height = 200;
 
+        this.spacebar = 32;
+
+        this.behaviour = new Jumping(this);
+
+        window.addEventListener("keydown", this.onKeyDown.bind(this));
+
+    }
+
+    private onKeyDown(event: KeyboardEvent){
+
+        if(event.keyCode == 32) {
+            this.behaviour.jumping();
+        }
     }
 
     public draw() {
