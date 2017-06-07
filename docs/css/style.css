@@ -1,0 +1,31 @@
+body {
+    background-color: #666;
+    font-family: 'Press Start 2P', cursive;
+    color:#202020;
+    font-size:18px;
+    overflow:hidden;
+    margin:0px; padding:0px;
+    cursor:url(../images/cursor.png), auto;
+}
+
+body * {
+    position: absolute;
+    display: block;
+    margin:0px; padding:0px;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none;
+    user-select: none;
+}
+
+container {
+    width:640px; height:480px;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    overflow:hidden;
+    background-image: url(../images/console.png);
+    background-repeat: no-repeat;
+}
