@@ -15,6 +15,12 @@ var GameObject = (function () {
     GameObject.prototype.setY = function (y) {
         this.y = y;
     };
+    GameObject.prototype.getHeight = function () {
+        return this.height;
+    };
+    GameObject.prototype.setHeight = function (h) {
+        this.height = h;
+    };
     return GameObject;
 }());
 var Game = (function () {
@@ -50,28 +56,51 @@ var Player = (function (_super) {
         this.behaviourJump = new Jumping(this);
         this.behaviourDuck = new Duck(this);
         window.addEventListener("keydown", this.onKeyDown.bind(this));
+        window.addEventListener("keyup", this.onKeyUp.bind(this));
     }
+    Player.getNoKeyPressed = function () {
+        return Player.noKeyPressed;
+    };
     Player.prototype.onKeyDown = function (event) {
         if (event.keyCode == 32) {
             this.behaviourJump.jumping();
         }
         else if (event.keyCode == 68) {
             this.behaviourDuck.duck();
+            Player.noKeyPressed = 0;
+        }
+    };
+    Player.prototype.onKeyUp = function (event) {
+        if (event.keyCode == 68) {
+            Player.noKeyPressed = 1;
         }
     };
     Player.prototype.draw = function () {
+        console.log(Player.noKeyPressed);
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
+        this.div.style.width = this.width + "px";
+        this.div.style.height = this.height + "px";
     };
+    Player.noKeyPressed = 0;
     return Player;
 }(GameObject));
 var Duck = (function () {
     function Duck(p) {
         this.player = p;
+        this.div = document.getElementById("player");
     }
     Duck.prototype.jumping = function () {
     };
     Duck.prototype.duck = function () {
-        console.log("duck!");
+        console.log(this.player.getHeight());
+        if (Player.getNoKeyPressed() == 1) {
+            this.player.setHeight(100);
+            this.player.setY(700);
+        }
+        if (Player.getNoKeyPressed() == 0) {
+            this.player.setHeight(200);
+            this.player.setY(600);
+        }
     };
     return Duck;
 }());

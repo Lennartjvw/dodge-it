@@ -23,4 +23,12 @@ class GameObject {
         this.y = y;
     }
 
+    public getHeight(){
+        return this.height;
+    }
+
+    public setHeight(h: number){
+        this.height = h;
+    }
+
 }
