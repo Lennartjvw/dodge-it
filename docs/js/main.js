@@ -23,6 +23,25 @@ var GameObject = (function () {
     };
     return GameObject;
 }());
+var Blocks = (function (_super) {
+    __extends(Blocks, _super);
+    function Blocks() {
+        _super.call(this);
+        var container = document.getElementById("container");
+        this.div = document.createElement("block");
+        container.appendChild(this.div);
+        this.x = 1800;
+        this.y = 700;
+        this.width = 100;
+        this.height = 100;
+        this.slideSpeed = 10;
+    }
+    Blocks.prototype.draw = function () {
+        this.x -= this.slideSpeed;
+        this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
+    };
+    return Blocks;
+}(GameObject));
 var Game = (function () {
     function Game() {
         var _this = this;

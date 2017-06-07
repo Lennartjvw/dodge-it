@@ -5,12 +5,12 @@ class Game {
     constructor() {
         console.log("Dodge It has started!");
         this.player = new Player();
+
         requestAnimationFrame(() => this.gameLoop());
     }
 
-
     private gameLoop() {
-        this.player.draw();    
+        this.player.draw();
         requestAnimationFrame(() => this.gameLoop());
     }
 
