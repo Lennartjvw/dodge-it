@@ -46,12 +46,17 @@ var Player = (function (_super) {
         this.width = 100;
         this.height = 200;
         this.spacebar = 32;
-        this.behaviour = new Jumping(this);
+        this.d = 68;
+        this.behaviourJump = new Jumping(this);
+        this.behaviourDuck = new Duck(this);
         window.addEventListener("keydown", this.onKeyDown.bind(this));
     }
     Player.prototype.onKeyDown = function (event) {
         if (event.keyCode == 32) {
-            this.behaviour.jumping();
+            this.behaviourJump.jumping();
+        }
+        else if (event.keyCode == 68) {
+            this.behaviourDuck.duck();
         }
     };
     Player.prototype.draw = function () {
@@ -59,6 +64,17 @@ var Player = (function (_super) {
     };
     return Player;
 }(GameObject));
+var Duck = (function () {
+    function Duck(p) {
+        this.player = p;
+    }
+    Duck.prototype.jumping = function () {
+    };
+    Duck.prototype.duck = function () {
+        console.log("duck!");
+    };
+    return Duck;
+}());
 var Jumping = (function () {
     function Jumping(p) {
         this.goingDown = false;
@@ -91,6 +107,8 @@ var Jumping = (function () {
                 }
             }, 10);
         }
+    };
+    Jumping.prototype.duck = function () {
     };
     return Jumping;
 }());

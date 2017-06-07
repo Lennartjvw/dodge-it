@@ -1,8 +1,10 @@
 class Player extends GameObject {
 
     private spacebar: number;
+    private d: number;
 
-    public behaviour: Behaviour;
+    public behaviourJump: Behaviour;
+    public behaviourDuck: Behaviour;
 
     constructor(){
         super();
@@ -18,8 +20,10 @@ class Player extends GameObject {
         this.height = 200;
 
         this.spacebar = 32;
+        this.d = 68
 
-        this.behaviour = new Jumping(this);
+        this.behaviourJump = new Jumping(this);
+        this.behaviourDuck = new Duck(this);
 
         window.addEventListener("keydown", this.onKeyDown.bind(this));
 
@@ -28,7 +32,10 @@ class Player extends GameObject {
     private onKeyDown(event: KeyboardEvent){
 
         if(event.keyCode == 32) {
-            this.behaviour.jumping();
+            this.behaviourJump.jumping();
+        }
+        else if(event.keyCode == 68) {
+            this.behaviourDuck.duck();
         }
     }
 

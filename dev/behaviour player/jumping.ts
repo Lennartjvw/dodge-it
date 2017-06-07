@@ -44,4 +44,8 @@ class Jumping implements Behaviour {
           }, 10)
         }
     }
+
+    duck(){
+        
+    }
 }
