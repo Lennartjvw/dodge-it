@@ -35,8 +35,8 @@ var Blocks = (function (_super) {
         container.appendChild(this.div);
         this.x = 1800;
         this.y = this.calculate();
-        this.width = 100;
-        this.height = 100;
+        this.width = 99;
+        this.height = 99;
         this.slideSpeed = 10;
         this.draw();
     }
@@ -57,6 +57,9 @@ var Blocks = (function (_super) {
         this.x -= this.slideSpeed;
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
     };
+    Blocks.prototype.removeDiv = function () {
+        this.div.remove();
+    };
     return Blocks;
 }(GameObject));
 var Level = (function () {
@@ -69,6 +72,7 @@ var Level = (function () {
     }
     Level.prototype.createBlock = function () {
         this.blocks.push(new Blocks());
+        console.log("aantal blocks: " + this.blocks.length);
     };
     Level.prototype.update = function () {
         this.player.draw();
@@ -76,7 +80,16 @@ var Level = (function () {
             var b = _a[_i];
             b.draw();
             if (this.utils.hasOverlap(b, this.player)) {
+                console.log("Player hits a block!");
+                this.removeBlockFromArray(b);
             }
+        }
+    };
+    Level.prototype.removeBlockFromArray = function (b) {
+        var i = this.blocks.indexOf(b);
+        if (i != -1) {
+            this.blocks.splice(i, 1);
+            b.removeDiv();
         }
     };
     return Level;

@@ -4,7 +4,7 @@
 class Blocks extends GameObject {
 
     private slideSpeed: number;
-    
+
     private random: number;
     private number: number;
 
@@ -19,8 +19,8 @@ class Blocks extends GameObject {
         this.x = 1800;
         this.y = this.calculate();
 
-        this.width = 100;
-        this.height = 100;
+        this.width = 99;
+        this.height = 99;
 
         this.slideSpeed = 10;
 
@@ -47,5 +47,9 @@ class Blocks extends GameObject {
     public draw(){
         this.x -= this.slideSpeed;
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
+    }
+
+    public removeDiv(){
+        this.div.remove();
     }
 }
