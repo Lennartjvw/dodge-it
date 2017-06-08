@@ -51,6 +51,7 @@ var Level = (function () {
         var _this = this;
         this.blocks = new Array();
         this.player = new Player();
+        this.utils = new Utils();
         setInterval(function () { return _this.createBlock(); }, 1400);
     }
     Level.prototype.createBlock = function () {
@@ -62,6 +63,9 @@ var Level = (function () {
         for (var _i = 0, _a = this.blocks; _i < _a.length; _i++) {
             var b = _a[_i];
             b.draw();
+            if (this.utils.hasOverlap(b, this.player)) {
+                console.log("Player hits a block!");
+            }
         }
     };
     return Level;
