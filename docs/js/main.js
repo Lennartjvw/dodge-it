@@ -34,12 +34,25 @@ var Blocks = (function (_super) {
         this.div = document.createElement("block");
         container.appendChild(this.div);
         this.x = 1800;
-        this.y = 700;
+        this.y = this.calculate();
         this.width = 100;
         this.height = 100;
         this.slideSpeed = 10;
         this.draw();
     }
+    Blocks.prototype.calculate = function () {
+        this.random = Math.floor(Math.random() * 6) + 1;
+        if (this.random < 3) {
+            this.number = 700;
+            console.log("this is: " + this.number);
+            return this.number;
+        }
+        else {
+            this.number = 600;
+            console.log("this is:" + this.number);
+            return this.number;
+        }
+    };
     Blocks.prototype.draw = function () {
         this.x -= this.slideSpeed;
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
@@ -56,7 +69,6 @@ var Level = (function () {
     }
     Level.prototype.createBlock = function () {
         this.blocks.push(new Blocks());
-        console.log("aantal blocks: " + this.blocks.length);
     };
     Level.prototype.update = function () {
         this.player.draw();
@@ -64,7 +76,6 @@ var Level = (function () {
             var b = _a[_i];
             b.draw();
             if (this.utils.hasOverlap(b, this.player)) {
-                console.log("Player hits a block!");
             }
         }
     };

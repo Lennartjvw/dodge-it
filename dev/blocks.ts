@@ -4,6 +4,9 @@
 class Blocks extends GameObject {
 
     private slideSpeed: number;
+    
+    private random: number;
+    private number: number;
 
     constructor() {
         super();
@@ -14,7 +17,7 @@ class Blocks extends GameObject {
         container.appendChild(this.div);
         
         this.x = 1800;
-        this.y = 700;
+        this.y = this.calculate();
 
         this.width = 100;
         this.height = 100;
@@ -22,7 +25,23 @@ class Blocks extends GameObject {
         this.slideSpeed = 10;
 
         this.draw();
+        
+    }
 
+    public calculate(){
+        this.random = Math.floor(Math.random() * 6) + 1 
+
+        if (this.random < 3){
+            this.number = 700;
+            console.log("this is: " + this.number);
+            return this.number;
+        }
+        else {
+            this.number = 600;
+            console.log("this is:" + this.number);
+            return this.number;
+            
+        }
     }
 
     public draw(){
