@@ -1,16 +1,17 @@
 class Game {
 
-    private player: Player;
+    private level: Level;
     
     constructor() {
         console.log("Dodge It has started!");
-        this.player = new Player();
-
+        this.level = new Level();
         requestAnimationFrame(() => this.gameLoop());
     }
 
+
+
     private gameLoop() {
-        this.player.draw();
+        this.level.update();
         requestAnimationFrame(() => this.gameLoop());
     }
 

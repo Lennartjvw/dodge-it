@@ -12,6 +12,9 @@ var GameObject = (function () {
     GameObject.prototype.getY = function () {
         return this.y;
     };
+    GameObject.prototype.getWidth = function () {
+        return this.width;
+    };
     GameObject.prototype.setY = function (y) {
         this.y = y;
     };
@@ -35,6 +38,7 @@ var Blocks = (function (_super) {
         this.width = 100;
         this.height = 100;
         this.slideSpeed = 10;
+        this.draw();
     }
     Blocks.prototype.draw = function () {
         this.x -= this.slideSpeed;
@@ -42,16 +46,36 @@ var Blocks = (function (_super) {
     };
     return Blocks;
 }(GameObject));
+var Level = (function () {
+    function Level() {
+        var _this = this;
+        this.blocks = new Array();
+        this.player = new Player();
+        setInterval(function () { return _this.createBlock(); }, 1400);
+    }
+    Level.prototype.createBlock = function () {
+        this.blocks.push(new Blocks());
+        console.log("aantal blocks: " + this.blocks.length);
+    };
+    Level.prototype.update = function () {
+        this.player.draw();
+        for (var _i = 0, _a = this.blocks; _i < _a.length; _i++) {
+            var b = _a[_i];
+            b.draw();
+        }
+    };
+    return Level;
+}());
 var Game = (function () {
     function Game() {
         var _this = this;
         console.log("Dodge It has started!");
-        this.player = new Player();
+        this.level = new Level();
         requestAnimationFrame(function () { return _this.gameLoop(); });
     }
     Game.prototype.gameLoop = function () {
         var _this = this;
-        this.player.draw();
+        this.level.update();
         requestAnimationFrame(function () { return _this.gameLoop(); });
     };
     return Game;
@@ -103,6 +127,17 @@ var Player = (function (_super) {
     Player.noKeyPressed = 0;
     return Player;
 }(GameObject));
+var Utils = (function () {
+    function Utils() {
+    }
+    Utils.prototype.hasOverlap = function (c1, c2) {
+        return !(c2.getX() > c1.getX() + c1.getWidth() ||
+            c2.getX() + c2.getWidth() < c1.getX() ||
+            c2.getY() > c1.getY() + c1.getHeight() ||
+            c2.getY() + c2.getHeight() < c1.getY());
+    };
+    return Utils;
+}());
 var Duck = (function () {
     function Duck(p) {
         this.player = p;

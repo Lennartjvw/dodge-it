@@ -5,7 +5,6 @@ class Blocks extends GameObject {
 
     private slideSpeed: number;
 
-
     constructor() {
         super();
 
@@ -22,16 +21,12 @@ class Blocks extends GameObject {
 
         this.slideSpeed = 10;
 
+        this.draw();
+
     }
 
     public draw(){
-
-
-
         this.x -= this.slideSpeed;
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
-
-
-
     }
 }

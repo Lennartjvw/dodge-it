@@ -19,6 +19,11 @@ class GameObject {
         return this.y;
     }
 
+    public getWidth(){
+        return this.width;
+    }
+    
+
     public setY(y: number): void {
         this.y = y;
     }
