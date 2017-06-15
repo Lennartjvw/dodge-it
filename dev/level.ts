@@ -4,6 +4,8 @@ class Level {
     private blocks: Array<Blocks> = new Array <Blocks>();
 
     private utils: Utils;
+
+    public static hit: Boolean = false;
     
     constructor(){
         this.player = new Player();
@@ -16,13 +18,21 @@ class Level {
         console.log("aantal blocks: " + this.blocks.length);
     }
 
-    public update(){
-        this.player.draw();
+    public static getHit() : Boolean{
+        return Level.hit;
+    }
 
-        for(let b of this.blocks){
+    public static setHit(hit){
+        Level.hit = hit;
+    }
+
+    public update(){
+        this.player.draw();    
+        for(let b of this.blocks){  
             b.draw();
             if(this.utils.hasOverlap(b, this.player)){
                 console.log("Player hits a block!");
+                Level.setHit(true);
                 this.removeBlockFromArray(b);
             }
         }
@@ -35,4 +45,5 @@ class Level {
             b.removeDiv();
         }
     }
+
 }

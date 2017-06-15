@@ -34,13 +34,11 @@ var Blocks = (function (_super) {
         this.div = document.createElement("block");
         container.appendChild(this.div);
         this.x = 1800;
-        this.y = this.calculate();
+        this.y = this.calculateY();
         this.width = 99;
         this.height = 99;
-        this.slideSpeed = 10;
-        this.draw();
     }
-    Blocks.prototype.calculate = function () {
+    Blocks.prototype.calculateY = function () {
         this.random = Math.floor(Math.random() * 6) + 1;
         if (this.random < 3) {
             this.number = 700;
@@ -54,8 +52,21 @@ var Blocks = (function (_super) {
         }
     };
     Blocks.prototype.draw = function () {
+        this.calculateSpeed();
         this.x -= this.slideSpeed;
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
+    };
+    Blocks.prototype.calculateSpeed = function () {
+        console.log("boolean is " + Level.hit);
+        if (Level.getHit() == true) {
+            this.slideSpeed = 0;
+            setInterval(function () {
+                Level.setHit(false);
+            }, 10000);
+        }
+        else {
+            this.slideSpeed = 10;
+        }
     };
     Blocks.prototype.removeDiv = function () {
         this.div.remove();
@@ -74,6 +85,12 @@ var Level = (function () {
         this.blocks.push(new Blocks());
         console.log("aantal blocks: " + this.blocks.length);
     };
+    Level.getHit = function () {
+        return Level.hit;
+    };
+    Level.setHit = function (hit) {
+        Level.hit = hit;
+    };
     Level.prototype.update = function () {
         this.player.draw();
         for (var _i = 0, _a = this.blocks; _i < _a.length; _i++) {
@@ -81,6 +98,7 @@ var Level = (function () {
             b.draw();
             if (this.utils.hasOverlap(b, this.player)) {
                 console.log("Player hits a block!");
+                Level.setHit(true);
                 this.removeBlockFromArray(b);
             }
         }
@@ -92,6 +110,7 @@ var Level = (function () {
             b.removeDiv();
         }
     };
+    Level.hit = false;
     return Level;
 }());
 var Game = (function () {
